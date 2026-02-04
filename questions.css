@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    margin: 20px;
+    padding: 20px;
+    width: 500px;
+    min-height: 200px;
+    display: grid;
+    grid-template-rows: 0 50px 1fr 50px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    text-shadow: 2px 2px 3px #00000056;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.2s linear;
+    background-color: #fff;
+    box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
+}
+
+.card__title {
+    grid-row: 3/4;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.card-1 {
+    background-color: #1fe4f5;
+}
+
+.card-2 {
+    background-color: #fbc1cc;
+}
+
+.card-3 {
+    background-color: #76b2fe;
+}
+
+.card-4 {
+    background-color: #60efbc;
+}
+
+.card-5 {
+    background-color: #f588d8;
+}
+
+.cards {
+    justify-content: center;
+}
+
+#generate {
+    font-size: 40px;
+    position: absolute;
+    display: inline-block;
+    background-color: var(--secondary-fg-color);
+    color: var(--secondary-bg-color);
+    height: 1.1em;
+    width: 1.1em;
+    line-height: 1;
+    border-radius: 50%;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: #fff;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#question_count {
+    position: absolute;
+    top: 1rem;
+    right: 2em;
+}
+
+
+.multi-radio-toggle {
+    position: relative;
+    background: #eee;
+    padding: 0 !important;
+    border-radius: .8rem;
+    height: 1.6rem;
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0);
+}
+
+.multi-radio-toggle--three {
+    width: 4.5rem;
+}
+
+.multi-radio-toggle__label p {
+    display: block;
+    margin: 0;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.multi-radio-toggle__label {
+    position: absolute;
+    z-index: 99;
+}
+
+/* first pos */
+.multi-radio-toggle__label:nth-of-type(1) {
+    left: -1em;
+    width: 2.5em;
+    text-align: left;
+}
+
+/* center */
+.multi-radio-toggle--three .multi-radio-toggle__label:nth-of-type(2) {
+    text-align: center;
+    width: 40px;
+    left: 50%;
+    margin-left: -20px;
+}
+
+/* left center */
+.multi-radio-toggle--four .multi-radio-toggle__label:nth-of-type(2) {
+    left: 20px;
+    width: 40px;
+}
+
+/* right center */
+.multi-radio-toggle--four .multi-radio-toggle__label:nth-of-type(3) {
+    right: 20px;
+    width: 40px;
+}
+
+/* last pos */
+.multi-radio-toggle--two .multi-radio-toggle__label:nth-of-type(2),
+.multi-radio-toggle--three .multi-radio-toggle__label:nth-of-type(3),
+.multi-radio-toggle--four .multi-radio-toggle__label:nth-of-type(4) {
+    right: -1em;
+    width: 2.5em;
+    text-align: right;
+}
+
+.multi-radio-toggle__label--align-bottom p {
+    display: block;
+    margin-top: 30px;
+}
+
+.multi-radio-toggle>* {
+    float: left;
+}
+
+.multi-radio-toggle input[type=radio] {
+    display: none;
+}
+
+.multi-radio-toggle__label {
+    height: 2em;
+    margin: 0;
+    cursor: pointer;
+    z-index: 1;
+    text-align: center;
+    width: 2rem;
+}
+
+.multi-radio-toggle__slide-bg {
+    margin-top: 1px;
+    width: 1.5rem;
+    height: 1.45rem;
+    position: absolute;
+    border-radius: 50%;
+    transition: all .4s ease;
+}
+
+.multi-radio-toggle input:checked~.multi-radio-toggle__slide-bg {
+    background: #4e5692;
+}
+
+.multi-radio-toggle input:nth-child(1):checked~.multi-radio-toggle__slide-bg {
+    left: 1px;
+}
+
+.multi-radio-toggle input:nth-child(2):checked~.multi-radio-toggle__slide-bg {
+    left: 1.5rem;
+}
+
+.multi-radio-toggle--four input:nth-child(2):checked~.multi-radio-toggle__slide-bg {
+    left: 22px;
+}
+
+.multi-radio-toggle input:nth-child(3):checked~.multi-radio-toggle__slide-bg {
+    right: 2px;
+}
+
+.multi-radio-toggle input:nth-child(4):checked~.multi-radio-toggle__slide-bg {
+    left: 93px;
+}
