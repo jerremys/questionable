@@ -18,7 +18,7 @@ body {
 .card {
     margin: 20px;
     padding: 20px;
-    width: 500px;
+    max-width: 500px;
     min-height: 200px;
     display: grid;
     grid-template-rows: 0 50px 1fr 50px;
