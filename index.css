@@ -9,6 +9,17 @@ body {
         Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.copyright {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding-bottom: .5rem;
+    text-decoration: none;
+    color: #fff3;
+}
+
 .cards {
     display: flex;
     flex-wrap: wrap;
