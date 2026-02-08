@@ -5,6 +5,40 @@
     user-select: none;
 }
 
+
+/* You can define specific transition styles using view-transition pseudo-elements */
+::view-transition-old(text-element) {
+    opacity: 1;
+    animation: fadeOut 0.5s;
+}
+
+::view-transition-new(text-element) {
+    opacity: 0;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+
 #navigation>div:last-child {
     flex-grow: 1;
 }
@@ -13,6 +47,11 @@
     position: relative;
     z-index: 1000;
     display: flex;
+    padding: .5rem 1rem;
+}
+
+#navigation a {
+    text-decoration: none;
 }
 
 #menu {
@@ -21,6 +60,17 @@
     top: 100%;
     right: 0;
     z-index: 100;
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    min-width: 20vw;
+    width: fit-content;
+    height: calc(100vh -2rem);
+    opacity: 0.3;
+    transform: rotateY(-90deg);
+    transform-origin: top right;
+    transition: 150ms all 100ms ease-out;
+    border-right: 1px solid gray;
 }
 
 #hamburger-toggle {
@@ -43,20 +93,16 @@
 #hamburger .slice {
     --slice-height: 2px;
     display: block;
+    /* Fallback to produce something hamburger-ish if calc is not available */
+    display: block;
     position: relative;
     width: 100%;
     height: var(--slice-height, 2px);
-    border-radius: var(--slice-height);
+    border-radius: 20%;
     transition: all 0.2s ease;
     background-color: #ffffff75;
-    opacity: 90%;
-}
-
-#hamburger .slice {
     margin-top: 22%;
-    /* Fallback to produce something hamburger-ish if calc is not available */
-    margin-top: calc(33% - var(--slice-height));
-    top: calc((33% - var(--slice-height)) / -2);
+    margin-top: calc(33% - var(--slice-height, 2px));
 }
 
 #hamburger-toggle:checked~#menu {
@@ -79,82 +125,34 @@
     transform: rotate(-45deg);
 }
 
-/*
- * Additional flair to make the demo look better. Do not take for gospel or best practice.
- */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+#navigation li:first-child::before {
+    content: "✓";
+    background-color: green;
+    height: 1.4rem;
+    width: 1.4rem;
+    position: absolute;
+    left: -0.6rem;
+    border-radius: 50%;
+    text-align: center;
 }
 
-main {
-    height: 100vh;
-    background: #fdfdfd;
-}
-
-#navigation {
-    padding: 1vh 2vw;
-
-}
-
-#menu {
-    background: rgb(212, 210, 215);
-}
-
-li {
+#navigation li {
     list-style: none;
-}
-
-#navigation a {
+    border: 1px solid #000000bd;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    background-color: #ffffff75;
+    margin-bottom: .1rem;
     display: block;
     padding: 1rem;
-    text-decoration: none;
+    max-width: 15rem;
 }
 
-#menu {
-    position: absolute;
-    top: calc(100% + 1px);
-    right: 0;
-    min-width: 20vw;
-    width: fit-content;
-    height: 100vh;
-
-    transform-origin: top right;
-    transform: rotateY(-90deg);
-    opacity: 0.3;
-    transition: 150ms all 100ms ease-out;
-    border-right: 1px solid gray;
+#navigation li:hover {
+    background-color: #ffffffb8;
+    cursor: pointer;
+    color: #131313;
 }
-
-article {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    max-width: 30rem;
-    margin: 5vh 10vw;
-}
-
-p {
-    line-height: 1.6rem;
-}
-
-h1 {
-    line-height: 3.2rem;
-}
-
-q {
-    font-style: italic;
-}
-
-
-
-
-
-
-
 
 
 body {

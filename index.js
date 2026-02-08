@@ -105,11 +105,26 @@ let genQuestion = function () {
 }
 
 let setQuestion = function (questionsText) {
-    questionEl.innerHTML = questionsText.join("<br><br>");
+    let newText = questionsText.join("<br><br>");
+    questionEl
+    if (!document.startViewTransition) {
+        questionEl.textContent = newText;
+        return;
+    }
+
+    document.startViewTransition(() => {
+        questionEl.textContent = newText;
+    });
+
     let cardClassList = document.getElementById("card").classList;
 
+    let newStyle
+    do {
+        newStyle = styles[Math.floor(Math.random() * styles.length)]
+    } while (cardClassList.contains(newStyle));
+
     cardClassList.remove(...styles);
-    cardClassList.add(styles[Math.floor(Math.random() * styles.length)]);
+    cardClassList.add(newStyle);
 };
 
 let setupListeners = function () {
