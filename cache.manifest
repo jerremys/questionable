@@ -1,7 +1,8 @@
 CACHE MANIFEST
-#Version 0.3
+#Version 0.5
 
 CACHE:
 index.css
 index.js
 index.html
+questions.js

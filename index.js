@@ -1,20 +1,105 @@
-let questionEl = document.getElementById("quote");
+let questionEl = document.getElementById("card");
 let styles = ["card-1", "card-2", "card-3", "card-4", "card-5"];
-let questions = ["What is the most interesting course you have ever taken in school?", "What is your favorite quotation?", "What is one item you might keep forever?", "What were you known for in high school? Did you have any nicknames?", "If you could have witnessed any event in sports history, what would it be?", "What is something you consider beautiful?", "What was your first song you played over and over again?", "What accomplishment are you most proud of?", "If you could be an apprentice to any person, from whom would you want to learn?", "What are three things that make you happy?", "What’s one movie you think everyone should see? What’s a movie nobody should see?", "Who inspires you?", "What’s one thing you want to do before you die?", "Get in groups of three people. What’s the most bizarre thing you have in common?", "Whenever you are having a bad day, what is the best thing you can do to cheer yourself up?", "Have you ever experienced something unexplainable or supernatural?", "What was your best Halloween costume?", "What’s the last item you purchased and why?", "What was the last thing you Googled out of pure curiosity?", "What YouTube or TikTok video do you watch over and over?", "What’s the kindest act you’ve ever witnessed?", "Tell us one thing you know you do well (a talent?) and one thing you know you cannot do.", "What is your favorite way to procrastinate?", "What is your favorite home-cooked meal?", "What was your favorite childhood toy?", "What clubs are you involved in?", "What was your first paid job?", "Have you met a famous person? Who?", "What’s the story behind your name?", "Do you believe in anything that most people might not believe in?", "How would you answer this: I wish everyone would __________________________.", "What’s the best sound effect you can make?", "What’s the funniest thing you did as a kid that people still talk about today?", "What idea do you think is worth arguing about?", "What is something quirky about you?", "For what reason do others often seek your help or input?", "What is your guilty pleasure—something you love that almost embarrasses you?", "What is one thing that’s important for others to know about you?", "Do you still do anything today that you also loved to do as a child?", "Do you have any daily rituals?", "What is the most misunderstood word you can think of?", "What is the first book you remember changing you somehow?", "What piece of wisdom do you like to pass on?", "Do you have an irrational fear or strange addiction?", "What’s been the most surprising thing about this stage of life you’re in now?", "What is your biggest pet peeve?", "Who are your animal friends?", "What’s your latest failure?", "What’s something new you’ve learned this week?", "What thought keeps you up at night?", "What’s a question you like people to ask you?", "What’s one thing that truly fascinates you?", "Think of the best community you’ve been a part of. What made this community so great?", "If you had to pick a song for your “entrance music,” what would it be?", "What’s something funny or surprising that happened to you lately?", "When did you do something you thought you couldn’t do this year? When were you brave?", "What are you learning?", "What is your latest victory in life?", "When was the last time you felt really good about yourself? What was happening?", "Tell us about an encounter you had with a stranger, a strange place, or a strange animal.", "What’s something that made you experience wonder or awe this year?", "What’s something you experienced in childhood that childrentoday don’t experience?", "What’s one piece of good news?", "What’s stressing you out most today?", "What changes when you enter a room?", "If you had to sing a karaoke song, which one would you choose?", "What could be the best compliment someone could give you?", "What trait do you most admire in someone else?", "How would you want others to describe you?", "What do you look forward to each day?", "What is the most heartwarming thing you’ve ever seen?", "What have you most recently formed an opinion about?", "Where is the most relaxing place you’ve ever been?", "What fictional place would you most like to go to?", "What are you most likely to become famous for?", "What’s worth spending more on to get the best?", "What is special about the place you grew up?", "What fad or trend do you hope comes back?", "Where’s the farthest you’ve ever been from home?", "What takes up too much of your time?", "What’s an essential workplace item for you?", "What job would you be terrible at?", "What’s the story behind the longest you’ve ever gone without sleep?", "How is your day going on a scale of 1 to 10? What would make it a 10?", "What do you like to do the old-fashioned way?", "What popular TV or movie do you refuse to watch?", "What’s the story behind a piece of clothing or jewelry you’re wearing?", "What concept do you try to explain but often feel misunder-stood when you do?", "What is your ideal city to live in and why?", "Have you ever tried to grow something? What happened?", "What’s overrated? What’s underrated?", "What’s something you didn’t want to do but were glad you did?", "What’s your signature meal? What’s the best meal you’ve ever had?", "What are your tips for staying hydrated?", "What’s your favorite study spot?", "What is your role in a group or in your family?", "What feels like “home” to you?", "How do you pass the time on an airplane/train/car trip?", "What did you bring for show-and-tell as a child? If you can’t remember, what would you bring for show-and-tell now?", "What quality do you most respect in other people and why?"];
-
 
 window.addEventListener('load', function () {
-
-
     const nav = document.getElementById("navigation");
     const hamburger = document.getElementById("hamburger-toggle");
     const menu = document.getElementById("menu");
+
+    menu.innerHTML = "";
+    document.getElementById('generate').addEventListener('click', function () {
+        setQuestion(getRandomQuestion());
+    });
+
+    let updateSubCheckboxes = function (checkbox, el) {
+        let cont = checkbox.parentElement;
+
+        while (cont && cont.nodeName != "LI") {
+            cont = cont.parentElement;
+        }
+
+        if (cont) {
+            cont.querySelectorAll("ul input[type=checkbox][name=sources]").forEach((el) => {
+                el.checked = checkbox.checked;
+            });
+        }
+
+    }
+
+    // Function to create a checkbox with a wrapping label
+    function createCheckboxWithLabel(labelText, value, url, parentElement) {
+        // Create the label element
+        const label = document.createElement('label');
+
+        // Create the input (checkbox) element
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = "sources";
+        checkbox.value = value;
+        checkbox.dataset.url = url;
+        checkbox.dataset.source = value;
+
+        // Append the checkbox and then the label text to the label element
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(labelText));
+
+        // Append the complete label to the specified parent element in the DOM
+        parentElement.appendChild(label);
+
+        checkbox.addEventListener('change', function (el) {
+            updateSubCheckboxes(this, el);
+            saveSelectedSources(getSelectedSources());
+        });
+
+        return checkbox;
+    }
+
+    questions.forEach(quest => {
+        let li = document.createElement('li');
+
+        menu.appendChild(li);
+
+        if ('categories' in quest) {
+            let ulSub = document.createElement('ul');
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, li);
+            li.appendChild(ulSub);
+
+            quest.categories.forEach((group) => {
+                let liSub = document.createElement('li');
+                createCheckboxWithLabel(group.name, `${quest.name} / ${group.name}`, quest.url, liSub).questions = group.questions;
+                ulSub.appendChild(liSub);
+            });
+        } else {
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, li).questions = quest.questions;
+        }
+    });
 
     const updateHamburgerARIA = () => {
         hamburger.setAttribute("aria-expanded", hamburger.checked ? "true" : "false");
         menu.setAttribute("aria-hidden", !hamburger.checked ? "true" : "false");
     };
     hamburger.addEventListener("change", updateHamburgerARIA);
+
+    // Uncheck all sources
+    document.querySelectorAll("input[type=checkbox][name=sources]").forEach((el) => {
+        el.checked = false;
+    });
+
+
+    loadSelectedSources().then(loaded => {
+        if (!loaded) {
+            // There were no saved sources, so check them all
+            document.querySelectorAll("input[type=checkbox][name=sources]").forEach((el) => {
+                el.checked = true;
+            });
+        }
+    });
+
+    loadSelectedQuestion().then(loaded => {
+        if (!loaded) {
+            setQuestion(getRandomQuestion());
+        }
+    });
 
     window.addEventListener("click", (event) => {
         const eventPath = event.composedPath();
@@ -24,47 +109,45 @@ window.addEventListener('load', function () {
             updateHamburgerARIA();
         }
     });
-
-
 });
 
-
-function myFunction() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-        x.style.display = "none";
-    } else {
-        x.style.display = "block";
-    }
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
-async function loadCookie() {
-    const cookieIdxs = await cookieStore.get("question_indexes");
-    let questionIndexes = cookieIdxs ? cookieIdxs.value.split(",") : [];
+let getRandomQuestion = function () {
+    let checkedGroups = document.querySelectorAll("input[type=checkbox][name=sources]:checked");
 
-    questionIndexes.forEach((questionIdx, index) => {
-        questionIndexes[index] = parseInt(questionIdx);
+    let totalQuestions = 0;
+    checkedGroups.forEach((el) => {
+        if (el.questions) {
+            totalQuestions += el.questions.length;
+        }
     });
 
-    //    document.querySelector(`input[type="radio"][value="${questionIndexes.length ? questionIndexes.length : 1}"]`).checked = true;
+    let questionIndex = getRandomInt(0, totalQuestions);
+    let questionCount = 0;
+    let currentQuestion = {};
 
-    loadQuestions(questionIndexes);
-}
+    for (let i = 0, j = checkedGroups.length; i < j; ++i) {
+        let el = checkedGroups[i];
+        if (el.questions) {
+            if (el.questions.length + questionCount > questionIndex) {
+                currentQuestion = {
+                    source: el.dataset.source,
+                    question: el.questions[questionIndex - questionCount],
+                    url: el.dataset.url
+                };
 
-let loadQuestions = function (questionIndexes) {
-    if (questionIndexes === undefined) {
-        questionIndexes = [];
-    }
-
-    if (questionIndexes.length === 0) {
-        let questionCount = 1;
-        for (let i = 0, j = questionCount; i < j; ++i) {
-            questionIndexes.push(Math.floor(Math.random() * questions.length));
+                break;
+            }
+            questionCount += el.questions.length;
         }
-    }
-
-    setQuestion(getQuestionText(questionIndexes));
-};
+    };
+    return currentQuestion;
+}
 
 let getSecondsLeftInDay = function () {
     const now = new Date();
@@ -74,47 +157,89 @@ let getSecondsLeftInDay = function () {
     return Math.floor(timeUntilMidnightMs / 1000);;
 }
 
-async function saveCookie(quoteIndexes) {
-    let seconds = getSecondsLeftInDay();
+let getSelectedSources = function () {
+    let sources = [];
+    document.querySelectorAll("input[type=checkbox][name=sources]:checked").forEach((el) => {
+        if (el.questions) {
+            sources.push(el.value);
+        }
+    });
+    return sources;
+}
+
+async function saveSelectedSources(sources) {
     await cookieStore.set({
-        name: "question_indexes",
-        value: quoteIndexes,
-        maxAge: seconds,
+        name: "sources",
+        value: JSON.stringify(sources),
+        maxAge: Number.MAX_SAFE_INTEGER,
+        secure: false
+    });
+};
+
+async function loadSelectedSources() {
+    const sourcesString = await cookieStore.get("sources");
+    let loaded = false;
+
+    if (sourcesString && sourcesString.value) {
+        let val = JSON.parse(sourcesString.value);
+
+        try {
+            if (val && Array.isArray(val)) {
+                selectSourcesByName(val);
+                loaded = true;
+            }
+
+        } catch (err) {
+            console.error("Unable to load saved sources", err);
+        }
+    }
+    return Promise.resolve(loaded);
+}
+
+async function saveSelectedQuestion(currentQuestion) {
+    await cookieStore.set({
+        name: "question",
+        value: JSON.stringify(currentQuestion),
+        maxAge: getSecondsLeftInDay(),
         secure: false
     });
 }
 
-let getQuestionText = function (quoteIndexes) {
-    let questionsText = [];
-
-    quoteIndexes.forEach((questionIdx, index) => {
-        questionsText.push(questions[questionIdx]);
-    });
-
-    saveCookie(quoteIndexes);
-
-    return questionsText;
-}
-
-let getQuestionCount = function () {
-    return parseInt(document.querySelector('input[type=radio]:checked').value);
-}
-
-let genQuestion = function () {
-    loadQuestions();
-}
-
-let setQuestion = function (questionsText) {
-    let newText = questionsText.join("<br><br>");
-    questionEl
-    if (!document.startViewTransition) {
-        questionEl.textContent = newText;
-        return;
+async function loadSelectedQuestion() {
+    const question = await cookieStore.get("question");
+    let loaded = false;
+    if (question && question.value) {
+        try {
+            let val = JSON.parse(question.value);
+            if (val.question) {
+                setQuestion(val);
+                loaded = true;
+            }
+        } catch (err) {
+            console.error("Unable to load saved sources", err);
+        }
     }
+    return Promise.resolve(loaded);
+}
 
-    document.startViewTransition(() => {
-        questionEl.textContent = newText;
+let selectSourcesByName = function (sources) {
+    sources.forEach((el) => {
+        document.querySelector(`input[type=checkbox][name=sources][value="${el}"]`).checked = true;
     });
+}
+
+let setQuestion = function (currentQuestion, doSave = true) {
+    document.startViewTransition(() => {
+        questionEl.textContent = currentQuestion.question;
+
+        let linkEl = document.getElementById("source-link");
+        linkEl.setAttribute('href', currentQuestion.url);
+        linkEl.textContent = currentQuestion.source;
+    });
+
+    if (doSave) {
+        saveSelectedQuestion(currentQuestion);
+    }
 
     let cardClassList = document.getElementById("card").classList;
 
@@ -127,10 +252,3 @@ let setQuestion = function (questionsText) {
     cardClassList.add(newStyle);
 };
 
-let setupListeners = function () {
-    document.getElementById('generate').addEventListener('click', genQuestion);
-
-}
-
-setupListeners();
-loadCookie();
