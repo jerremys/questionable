@@ -60,6 +60,11 @@ window.addEventListener('load', function () {
         menu.appendChild(li);
 
         if ('categories' in quest) {
+            let div = document.createElement('div');
+            div.classList.add("collapsable");
+            li.appendChild(div);
+
+
             let ulSub = document.createElement('ul');
             createCheckboxWithLabel(quest.name, quest.name, quest.url, li);
             li.appendChild(ulSub);
@@ -73,6 +78,19 @@ window.addEventListener('load', function () {
             createCheckboxWithLabel(quest.name, quest.name, quest.url, li).questions = quest.questions;
         }
     });
+
+    document.querySelectorAll("div.collapsable").forEach((el) => {
+        el.addEventListener("click", (event) => {
+            let classes = event.originalTarget.classList;
+
+            if (classes.contains('expanded')) {
+                classes.remove("expanded");
+            } else {
+                classes.add("expanded");
+            }
+        });
+    });
+
 
     const updateHamburgerARIA = () => {
         hamburger.setAttribute("aria-expanded", hamburger.checked ? "true" : "false");
