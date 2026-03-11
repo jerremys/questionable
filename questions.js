@@ -15,28 +15,28 @@ let questions = [
                 name: "Getting to Know You Questions for Groups & Teams",
                 questions: ["What motivates you to work hard?", "What's something you're proud of accomplishing?", "What's your favorite way to relax?", "What's one skill you'd love to learn?", "What's the best gift you've ever received?", "What's your favorite tradition?", "What's one thing most people don't know about you?", "How would your friends describe you?", "What's your favorite way to spend time with others?", "What's your favorite subject or topic to learn about?",]
             }, {
-                name: "Fun & Lighthearted Questions",
+                name: "Fun & Lighthearted",
                 questions: ["If you could have any superpower, what would it be?", "Would you rather vacation in Hawaii or Alaska?", "What song do you know all the words to?", "What's your favorite fast food restaurant?", "If you were an animal, which one would you be?", "What's the funniest thing that happened to you recently?", "How many pillows do you sleep with?", "Do you love or hate roller coasters?", "What's your favorite snack?", "What's your favorite game to play?",]
             }, {
-                name: "Deeper Questions for Meaningful Connection",
+                name: "Meaningful Connection",
                 nquestionse: ["Who has had the biggest influence on your life?", "What's one rule you try to live by?", "What's the hardest thing you've ever done?", "What's one goal you're working toward right now?", "What does success mean to you?", "What's something you've learned the hard way?", "What are you most grateful for?", "What's one thing you'd tell your younger self?", "What's a challenge that shaped who you are today?", "What's something you hope for the future?",]
             }, {
                 name: "Would You Rather",
                 questions: ["Would you rather win the lottery or have your dream job?", "Would you rather work alone or with a team?", "Would you rather read a book or watch a movie?", "Would you rather travel by plane or train?", "Would you rather cook or eat out?", "Would you rather plan everything or go with the flow?", "Would you rather be early or right on time?", "Would you rather have more time or more money?", "Would you rather host a party or attend one?", "Would you rather try something new or stick with what you know?",]
             }, {
-                name: "Quick-Fire Questions (Easy for Any Group)",
+                name: "Quick-Fire Questions",
                 questions: ["Coffee or tea?", "Morning person or night owl?", "Sweet or salty snacks?", "Texting or calling?", "Beach or mountains?", "Dogs or cats?", "Movies or books?", "Early riser or sleep-in?", "Big group or small group?", "Plan ahead or go with the flow?",]
             }, {
-                name: "Questions for Classrooms & Youth Groups",
+                name: "Classrooms & Youth Groups",
                 questions: ["What subject do you enjoy the most right now?", "What's something new you learned recently?", "Who is someone you look up to?", "What's your favorite school memory?", "If you could start a club, what would it be?", "What's one thing you're really good at?", "What's something you'd like help with?", "What's your favorite way to learn?", "What makes a class fun for you?", "What's something you're excited about this year?",]
             }, {
-                name: "Questions for Teams & Work Groups",
+                name: "Teams & Work Groups",
                 questions: ["What's one thing that helps you stay focused?", "What does a productive day look like to you?", "What's a skill you want to improve this year?", "How do you like to receive feedback?", "What's one thing that motivates you?", "What's a small win you've had recently?", "What's your preferred way to communicate?", "What helps you feel supported at work?", "What's one goal you're working toward?", "What's something that helps you reset after a busy day?",]
             }, {
                 name: "Family & Friend Conversation Starters",
                 questions: ["What's your favorite family tradition?", "What's a meal that brings back good memories?", "What's your favorite holiday activity?", "What's something you're grateful for right now?", "What's a recent moment that made you smile?", "What's your favorite way to spend time together?", "What's something you're looking forward to?", "What's a place you'd love to visit again?", "What's a memory you'll never forget?", "What's something you admire about someone in your family?",]
             }, {
-                name: "Reflective Questions (Optional Deeper Sharing)",
+                name: "Reflective Questions",
                 questions: ["What's something that has shaped who you are?", "What's a value that's important to you?", "What's a challenge you've learned from?", "What's something you're proud of overcoming?", "What helps you feel grounded?", "What's a lesson you've learned recently?", "What's something you're working on personally?", "What does balance look like for you?", "What's one thing you want more of this year?", "What's something you hope others understand about you?"]
             }
         ]
@@ -77,7 +77,6 @@ let questions = [
             {
                 name: "Friends or Colleagues",
                 questions: [
-
                     "If you could interview anyone from your life living or dead, but not a celebrity, who would it be and why?",
                     "What is your first memory of me?",
                     "Was there a time when you didn't like me?",
@@ -104,6 +103,7 @@ let questions = [
                 ]
             }, {
                 name: "Raising Children",
+                default: false,
                 questions: [
                     "When did you first find out that you'd be a parent? How did you feel?",
                     "Did you always know you wanted to be a parent?",
@@ -116,6 +116,7 @@ let questions = [
                 ]
             }, {
                 name: "Parents",
+                default: false,
                 questions: [
                     "Do you remember what was going through your head when you first saw me?",
                     "How did you choose my name?",
@@ -167,6 +168,7 @@ let questions = [
             }, {
 
                 name: "Teachers",
+                default: false,
                 questions: [
                     "When and why did you decide to become a teacher?",
                     "Tell me about your first day as a teacher.",
@@ -262,6 +264,7 @@ let questions = [
                 ]
             }, {
                 name: "Military",
+                default: false,
                 questions: [
                     "When were you drafted or when did you enlist?",
                     "What do you remember about the day you enlisted?",
@@ -297,44 +300,7 @@ let questions = [
                     "What are some things you miss about being in the service? What are some you are glad to have left behind?",
                     "What has been difficult to communicate to family and friends about your military service?",
                     "Do you have advice for other military couples?",
-                    "If you have children, what do you want them to know about your military service?",
-                    "Remembering the Fallen: What was your relationship to _______?",
-                    "Remembering the Fallen: Tell me about _______.",
-                    "Remembering the Fallen: What did _______ look like?",
-                    "Remembering the Fallen: What is one of your favorite memories of _______?",
-                    "Remembering the Fallen: How did you find out about _______'s death?",
-                    "Remembering the Fallen: What has helped you most in your grief?",
-                    "Remembering the Fallen: Do you have any traditions to honor _______?",
-                    "Remembering the Fallen: Do you have any funny stories about the two of you together?"
-                ]
-            }, {
-                name: "Remembering a Loved One",
-                questions: [
-                    "What was your relationship to _____?",
-                    "Tell me about _____.",
-                    "What is your first memory of _____?",
-                    "What is your best memory of _____?",
-                    "What is your most vivid memory of _____?",
-                    "What did _____ mean to you?",
-                    "Are you comfortable/ can you talk about _____'s death? How did _____ die?",
-                    "What has been the hardest thing about losing _____?",
-                    "What would you ask _____ if _____ were here today?",
-                    "What do you miss most about _____?",
-                    "How do you think _____ would want to be remembered?",
-                    "Can you talk about the biggest obstacles _____ overcame in life?",
-                    "Was there anything you and _____ disagreed about, fought over, or experienced some conflict around?",
-                    "What about _____ makes you smile?",
-                    "What was your relationship like?",
-                    "What did _____ look like?",
-                    "Did you have any favorite jokes _____ used to tell?",
-                    "Do you have any stories you want to share about _____?",
-                    "What were _____'s hopes and dreams for the future?",
-                    "Is there something about _____ that you think no one else knows?",
-                    "How are you different now than you were before you lost _____?",
-                    "What is the image of _____ that persists?",
-                    "Do you have any traditions to honor _____?",
-                    "What has helped you the most in your grief?",
-                    "What are the hardest times?"
+                    "If you have children, what do you want them to know about your military service?"
                 ]
             }, {
                 name: "Justice",

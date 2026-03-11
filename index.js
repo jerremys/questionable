@@ -62,8 +62,8 @@ window.addEventListener('load', function () {
         if ('categories' in quest) {
             let div = document.createElement('div');
             div.classList.add("collapsable");
+            div.innerText = "⌃";
             li.appendChild(div);
-
 
             let ulSub = document.createElement('ul');
             createCheckboxWithLabel(quest.name, quest.name, quest.url, li);

@@ -57,20 +57,18 @@
 #menu {
     visibility: hidden;
     position: absolute;
-    top: 100%;
-    right: 0;
     z-index: 100;
     position: absolute;
     top: calc(100% + 1px);
     right: 0;
-    min-width: 20vw;
-    width: fit-content;
     height: calc(100vh -2rem);
     opacity: 0.3;
     transform: rotateY(-90deg);
     transform-origin: top right;
     transition: 150ms all 100ms ease-out;
     border-right: 1px solid gray;
+    max-width: 20rem;
+    margin-left: 2rem;
 }
 
 #hamburger-toggle {
@@ -131,30 +129,13 @@ input[type="checkbox"] {
     top: 0.5rem;
 }
 
-/*
-#navigation li::before {
-    height: 1.4rem;
-    width: 1.4rem;
-    position: relative;
-    border-radius: 50%;
-    text-align: center;
-    display: inline-block;
-    margin-left: -1.4rem;
-    margin-right: 0.8rem;
-}
-
-#navigation li:not(:has(ul))::before {
-    content: "✓";
-    background-color: green;
-}
-*/
 #navigation li {
     position: relative;
     list-style: none;
     border: 1px solid #000000bd;
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 1rem;
-    background-color: #ffffff75;
+    background-color: #707070;
     margin-bottom: .1rem;
     display: block;
     padding: 0;
@@ -199,30 +180,25 @@ body {
 }
 
 .collapsable {
-    line-height: 0;
     position: absolute;
     right: 1rem;
-    top: .7rem;
+    top: .4rem;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
-}
-
-.collapsable.expanded {
-    transform: scaleY(-1);
-}
-
-.collapsable::before {
-    content: "⌃";
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 2rem;
+    width: 2rem;
     background-color: #ffffff40;
     color: #333;
-    line-height: 1.1;
+    line-height: 1.2;
     font-size: 30px;
     text-align: center;
     border: 2px solid #00000073;
     border-radius: 20%;
     display: inline-block;
+}
+
+.collapsable.expanded {
+    transform: scaleY(-1);
 }
 
 .collapsable.expanded~ul {
@@ -314,6 +290,7 @@ body {
 #menu li li {
     width: 90%;
     margin-left: 10%;
+    background-color: #ffffff57;
 }
 
 :root {
