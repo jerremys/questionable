@@ -20,14 +20,17 @@ window.addEventListener('load', function () {
 
         if (cont) {
             cont.querySelectorAll("ul input[type=checkbox][name=sources]").forEach((el) => {
-                el.checked = checkbox.checked;
+                // Always uncheck everything, but only check defaults
+                if (!checkbox.checked || (checkbox.checked && el.dataset.is_default == "true")) {
+                    el.checked = checkbox.checked;
+                }
             });
         }
 
     }
 
     // Function to create a checkbox with a wrapping label
-    function createCheckboxWithLabel(labelText, value, url, parentElement) {
+    function createCheckboxWithLabel(labelText, value, url, isDefault, parentElement) {
         // Create the label element
         const label = document.createElement('label');
 
@@ -38,6 +41,7 @@ window.addEventListener('load', function () {
         checkbox.value = value;
         checkbox.dataset.url = url;
         checkbox.dataset.source = value;
+        checkbox.dataset.is_default = isDefault == undefined ? true : isDefault;
 
         // Append the checkbox and then the label text to the label element
         label.appendChild(checkbox);
@@ -66,16 +70,16 @@ window.addEventListener('load', function () {
             li.appendChild(div);
 
             let ulSub = document.createElement('ul');
-            createCheckboxWithLabel(quest.name, quest.name, quest.url, li);
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, li);
             li.appendChild(ulSub);
 
             quest.categories.forEach((group) => {
                 let liSub = document.createElement('li');
-                createCheckboxWithLabel(group.name, `${quest.name} / ${group.name}`, quest.url, liSub).questions = group.questions;
+                createCheckboxWithLabel(group.name, `${quest.name} / ${group.name}`, quest.url, group.isDefault, liSub).questions = group.questions;
                 ulSub.appendChild(liSub);
             });
         } else {
-            createCheckboxWithLabel(quest.name, quest.name, quest.url, li).questions = quest.questions;
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, li).questions = quest.questions;
         }
     });
 
@@ -108,7 +112,10 @@ window.addEventListener('load', function () {
         if (!loaded) {
             // There were no saved sources, so check them all
             document.querySelectorAll("input[type=checkbox][name=sources]").forEach((el) => {
-                el.checked = true;
+                if (el.dataset.is_default == "true") {
+                    el.checked = true;
+
+                }
             });
         }
     });

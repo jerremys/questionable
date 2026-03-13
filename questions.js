@@ -103,7 +103,7 @@ let questions = [
                 ]
             }, {
                 name: "Raising Children",
-                default: false,
+                isDefault: false,
                 questions: [
                     "When did you first find out that you'd be a parent? How did you feel?",
                     "Did you always know you wanted to be a parent?",
@@ -116,7 +116,7 @@ let questions = [
                 ]
             }, {
                 name: "Parents",
-                default: false,
+                isDefault: false,
                 questions: [
                     "Do you remember what was going through your head when you first saw me?",
                     "How did you choose my name?",
@@ -168,7 +168,7 @@ let questions = [
             }, {
 
                 name: "Teachers",
-                default: false,
+                isDefault: false,
                 questions: [
                     "When and why did you decide to become a teacher?",
                     "Tell me about your first day as a teacher.",
@@ -264,7 +264,7 @@ let questions = [
                 ]
             }, {
                 name: "Military",
-                default: false,
+                isDefault: false,
                 questions: [
                     "When were you drafted or when did you enlist?",
                     "What do you remember about the day you enlisted?",

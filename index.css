@@ -287,6 +287,10 @@ body {
     }
 }
 
+input.partial {
+    background-color: orange;
+}
+
 #menu li li {
     width: 90%;
     margin-left: 10%;
