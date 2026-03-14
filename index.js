@@ -1,15 +1,30 @@
 let questionEl = document.getElementById("card");
 let styles = ["card-1", "card-2", "card-3", "card-4", "card-5"];
 
+const updateHamburgerARIA = () => {
+    const hamburger = document.getElementById("hamburger-toggle");
+
+    if (hamburger.checked) {
+        document.getElementById("menu").classList.add("show");
+    } else {
+        document.getElementById("menu").classList.remove("show");
+    }
+    hamburger.setAttribute("aria-expanded", hamburger.checked ? "true" : "false");
+    menu.setAttribute("aria-hidden", !hamburger.checked ? "true" : "false");
+};
+
+
 window.addEventListener('load', function () {
     const nav = document.getElementById("navigation");
-    const hamburger = document.getElementById("hamburger-toggle");
     const menu = document.getElementById("menu");
 
     menu.innerHTML = "";
     document.getElementById('generate').addEventListener('click', function () {
         setQuestion(getRandomQuestion());
     });
+
+    document.getElementById('hamburger-toggle').addEventListener('click', updateHamburgerARIA);
+
 
     let updateSubCheckboxes = function (checkbox, el) {
         let cont = checkbox.parentElement;
@@ -95,13 +110,6 @@ window.addEventListener('load', function () {
         });
     });
 
-
-    const updateHamburgerARIA = () => {
-        hamburger.setAttribute("aria-expanded", hamburger.checked ? "true" : "false");
-        menu.setAttribute("aria-hidden", !hamburger.checked ? "true" : "false");
-    };
-    hamburger.addEventListener("change", updateHamburgerARIA);
-
     // Uncheck all sources
     document.querySelectorAll("input[type=checkbox][name=sources]").forEach((el) => {
         el.checked = false;
@@ -126,14 +134,6 @@ window.addEventListener('load', function () {
         }
     });
 
-    window.addEventListener("click", (event) => {
-        const eventPath = event.composedPath();
-        const isTargeted = eventPath.includes(nav);
-        if (!isTargeted) {
-            hamburger.checked = false;
-            updateHamburgerARIA();
-        }
-    });
 });
 
 function getRandomInt(min, max) {
