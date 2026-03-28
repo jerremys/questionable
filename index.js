@@ -1,4 +1,4 @@
-let questionEl = document.getElementById("card");
+let questionEl = document.getElementById("question");
 let styles = ["card-1", "card-2", "card-3", "card-4", "card-5"];
 
 const updateHamburgerARIA = () => {
@@ -256,7 +256,6 @@ let selectSourcesByName = function (sources) {
 let setQuestion = function (currentQuestion, doSave = true) {
     document.startViewTransition(() => {
         questionEl.textContent = currentQuestion.question;
-
         let linkEl = document.getElementById("source-link");
         linkEl.setAttribute('href', currentQuestion.url);
         linkEl.textContent = currentQuestion.source;
@@ -266,14 +265,5 @@ let setQuestion = function (currentQuestion, doSave = true) {
         saveSelectedQuestion(currentQuestion);
     }
 
-    let cardClassList = document.getElementById("card").classList;
-
-    let newStyle
-    do {
-        newStyle = styles[Math.floor(Math.random() * styles.length)]
-    } while (cardClassList.contains(newStyle));
-
-    cardClassList.remove(...styles);
-    cardClassList.add(newStyle);
 };
 
