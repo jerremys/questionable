@@ -14,8 +14,41 @@ const updateHamburgerARIA = () => {
 };
 
 
+let updateAllParentChecked = function (parentId) {
+    let root = [];
+
+    if (parentId !== undefined) {
+        root.push(document.querySelector(`input[type=checkbox][name=sources][data-question_id="${parentId}"]`));
+    } else {
+        root = document.querySelectorAll('input[type=checkbox][name=sources][data-question_id]');
+    }
+
+    root.forEach((parentCb) => {
+        let checked = 0, unchecked = 0;
+
+        document.querySelectorAll(`input[type=checkbox][name=sources][data-parent_id="${parentCb.dataset.question_id}"]`).forEach((checkbox) => {
+            if (checkbox.checked) {
+                ++checked;
+            } else {
+                ++unchecked;
+            }
+        });
+
+        if (0 === checked === unchecked) {
+            return;
+        } else if (checked > 0 && unchecked > 0) {
+            parentCb.classList.add("partial");
+            parentCb.checked = false;
+        } else if (checked > 0 && unchecked === 0) {
+            parentCb.classList.remove("partial");
+            parentCb.checked = true;
+        } else if (checked === 0 && unchecked > 0) {
+            parentCb.checked = false;
+        }
+    });
+}
+
 window.addEventListener('load', function () {
-    const nav = document.getElementById("navigation");
     const menu = document.getElementById("menu");
 
     menu.innerHTML = "";
@@ -25,27 +58,23 @@ window.addEventListener('load', function () {
 
     document.getElementById('hamburger-toggle').addEventListener('click', updateHamburgerARIA);
 
-
-    let updateSubCheckboxes = function (checkbox, el) {
-        let cont = checkbox.parentElement;
-
-        while (cont && cont.nodeName != "LI") {
-            cont = cont.parentElement;
+    let updateSubCheckboxes = function (checkbox) {
+        if (!checkbox.dataset.question_id) {
+            return;
         }
 
-        if (cont) {
-            cont.querySelectorAll("ul input[type=checkbox][name=sources]").forEach((el) => {
-                // Always uncheck everything, but only check defaults
-                if (!checkbox.checked || (checkbox.checked && el.dataset.is_default == "true")) {
-                    el.checked = checkbox.checked;
-                }
-            });
-        }
+        checkbox.classList.remove("partial");
 
+        document.querySelectorAll(`input[type=checkbox][name=sources][data-parent_id="${checkbox.dataset.question_id}"]`).forEach((el) => {
+            // Always uncheck everything, but only check defaults
+            if (!checkbox.checked || (checkbox.checked && el.dataset.is_default == "true")) {
+                el.checked = checkbox.checked;
+            }
+        });
     }
 
     // Function to create a checkbox with a wrapping label
-    function createCheckboxWithLabel(labelText, value, url, isDefault, parentElement) {
+    function createCheckboxWithLabel(labelText, value, url, isDefault, id, isSubgroup, parentElement) {
         // Create the label element
         const label = document.createElement('label');
 
@@ -58,6 +87,12 @@ window.addEventListener('load', function () {
         checkbox.dataset.source = value;
         checkbox.dataset.is_default = isDefault == undefined ? true : isDefault;
 
+        if (isSubgroup) {
+            checkbox.dataset.parent_id = id;
+        } else {
+            checkbox.dataset.question_id = id;
+        }
+
         // Append the checkbox and then the label text to the label element
         label.appendChild(checkbox);
         label.appendChild(document.createTextNode(labelText));
@@ -65,15 +100,23 @@ window.addEventListener('load', function () {
         // Append the complete label to the specified parent element in the DOM
         parentElement.appendChild(label);
 
-        checkbox.addEventListener('change', function (el) {
-            updateSubCheckboxes(this, el);
+        checkbox.addEventListener('change', function (evt) {
+            if (this.dataset.question_id) {
+                updateSubCheckboxes(this);
+            } else {
+                updateAllParentChecked(this.dataset.parent_id);
+            }
+
+
             saveSelectedSources(getSelectedSources());
         });
 
         return checkbox;
     }
+    let cbCount = 0;
 
     questions.forEach(quest => {
+        ++cbCount;
         let li = document.createElement('li');
 
         menu.appendChild(li);
@@ -85,16 +128,16 @@ window.addEventListener('load', function () {
             li.appendChild(div);
 
             let ulSub = document.createElement('ul');
-            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, li);
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, cbCount, false, li);
             li.appendChild(ulSub);
 
             quest.categories.forEach((group) => {
                 let liSub = document.createElement('li');
-                createCheckboxWithLabel(group.name, `${quest.name} / ${group.name}`, quest.url, group.isDefault, liSub).questions = group.questions;
+                createCheckboxWithLabel(group.name, `${quest.name} / ${group.name}`, quest.url, group.isDefault, cbCount, true, liSub).questions = group.questions;
                 ulSub.appendChild(liSub);
             });
         } else {
-            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, li).questions = quest.questions;
+            createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, cbCount, false, li).questions = quest.questions;
         }
     });
 
@@ -122,17 +165,19 @@ window.addEventListener('load', function () {
             document.querySelectorAll("input[type=checkbox][name=sources]").forEach((el) => {
                 if (el.dataset.is_default == "true") {
                     el.checked = true;
-
                 }
             });
         }
+
+        loadSelectedQuestion().then(loaded => {
+            if (!loaded) {
+                setQuestion(getRandomQuestion());
+            }
+            updateAllParentChecked();
+        });
+
     });
 
-    loadSelectedQuestion().then(loaded => {
-        if (!loaded) {
-            setQuestion(getRandomQuestion());
-        }
-    });
 
 });
 

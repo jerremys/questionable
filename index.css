@@ -76,7 +76,7 @@
 
 input[type="checkbox"] {
     position: absolute;
-    left: -1rem;
+    left: 0;
     top: 0.5rem;
 }
 
@@ -93,7 +93,7 @@ input[type="checkbox"] {
 }
 
 #menu label {
-    padding: .8rem 1.5rem !important;
+    padding: .8rem 1.5rem .8rem 2rem !important;
     display: block;
     cursor: pointer;
 }
@@ -137,12 +137,15 @@ input[type="checkbox"] {
     height: 2rem;
     width: 2rem;
     background-color: var(--icon-color);
-    line-height: 1.2;
     font-size: 30px;
     text-align: center;
     border: 2px solid #00000032;
-    border-radius: 20%;
+    border-radius: 50%;
     display: inline-block;
+}
+
+.collapsable:hover {
+    box-shadow: 0 0 15px #0003;
 }
 
 .collapsable.expanded {
@@ -199,14 +202,13 @@ input[type="checkbox"]:checked {
     padding: 2px;
 }
 
+input[type="checkbox"].partial {
+    background: linear-gradient(45deg, var(--checkbox-checked-background-color) 50%, #000000 50%);
+}
+
 input[type="checkbox"]:not(:disabled):checked {
     border-color: var(--checkbox-checked-color);
     background-color: var(--checkbox-checked-background-color);
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 32 32" xml:space="preserve"><path style="fill: %23274c77" d="M11.941,28.877l-11.941-11.942l5.695-5.696l6.246,6.246l14.364-14.364L32,8.818"/></svg>');
-}
-
-input[type="checkbox"]:disabled {
-    background-color: var(--checkbox-disabled-bg-color);
 }
 
 input[type="checkbox"]:disabled:checked {
@@ -215,11 +217,15 @@ input[type="checkbox"]:disabled:checked {
 
 @media (hover: hover) {
     input[type="checkbox"]:not(:disabled):hover {
-        background-color: var(--checkbox-hover-color);
         outline: 6px solid var(--checkbox-hover-color);
         transform: scale(1.05);
     }
+
+    input[type="checkbox"]:not(:checked):hover {
+        background-color: var(--checkbox-hover-color);
+    }
 }
+
 
 input[type="checkbox"]:focus-visible {
     outline: 6px solid var(--checkbox-hover-color);
