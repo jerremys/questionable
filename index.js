@@ -51,9 +51,9 @@ let updateAllParentChecked = function (parentId) {
 window.addEventListener('load', function () {
     const menu = document.getElementById("menu");
 
-    menu.innerHTML = "";
     document.getElementById('generate').addEventListener('click', function () {
         setQuestion(getRandomQuestion());
+        this.blur();
     });
 
     document.getElementById('hamburger-toggle').addEventListener('click', updateHamburgerARIA);
@@ -107,7 +107,6 @@ window.addEventListener('load', function () {
                 updateAllParentChecked(this.dataset.parent_id);
             }
 
-
             saveSelectedSources(getSelectedSources());
         });
 
@@ -140,6 +139,8 @@ window.addEventListener('load', function () {
             createCheckboxWithLabel(quest.name, quest.name, quest.url, quest.isDefault, cbCount, false, li).questions = quest.questions;
         }
     });
+
+    menu.a
 
     document.querySelectorAll("div.collapsable").forEach((el) => {
         el.addEventListener("click", (event) => {
